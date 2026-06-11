@@ -1,5 +1,5 @@
 /**Global Variables**/
-var topics, newButton, newTopic, queryURL, sadboyName, results, sadDiv, rating, gifShow, state;
+var topics, newButton, newTopic, queryURL, sadboyName, results, sadboyDiv, rating, gifShow, state;
 
 /**Starter array that holds hero items**/
 topics = ["Macintosh Plus 420", "Vaporwave", "Simpsonwave", "Outrun", "Flamingosis", "Yung Lean", "A e s t h e t i c", "sadboys"];
@@ -22,10 +22,10 @@ function makeButtons() {
 $("#add-sadboy").on("click", function(event){
 	event.preventDefault();
 	//Prevent blank user input from creating a new button
-	if ($("#user-input").val() !== ""){
+	if ($("#user-input").val().trim() !== ""){
 		//Take in user input and push to topics array
 		//Also clear user input after value is stored
-		newTopic = $("#user-input").val();
+		newTopic = $("#user-input").val().trim();
 		$("#user-input").val("");
 		topics.push(newTopic);
 		makeButtons();
@@ -34,10 +34,10 @@ $("#add-sadboy").on("click", function(event){
 
 /**Key-press event for adding new buttons from user input**/
 $("#user-input").keypress(function(e){
-	if (e.keyCode === 13 && $("#user-input").val() !== ""){
+	if (e.keyCode === 13 && $("#user-input").val().trim() !== ""){
 		//Take in user input and push to topics array
 		//Also clear user input after value is stored
-		newTopic = $("#user-input").val();
+		newTopic = $("#user-input").val().trim();
 		$("#user-input").val("");
 		topics.push(newTopic);
 		makeButtons();
@@ -51,7 +51,7 @@ function displayGifs(){
 
 	//Create queryURL using the name of the hero
 	sadboyName = $(this).attr("data-name");
-	queryURL = "https://api.giphy.com/v1/gifs/search?q=" + sadboyName + "&api_key=wnwOhzKBAU126lrFL6GWPci6OB7w90hb&limit=5";
+	queryURL = "https://api.giphy.com/v1/gifs/search?q=" + encodeURIComponent(sadboyName) + "&api_key=wnwOhzKBAU126lrFL6GWPci6OB7w90hb&limit=5";
 	
 	//Ajax request
 	$.ajax({
